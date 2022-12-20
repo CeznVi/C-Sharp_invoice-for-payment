@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 namespace Invoice_for_payment
 {
     [Serializable]
-    public class Invoice : ISerializable
+    public class Invoice : ISerializable, IComparable<Invoice>
     {
         //Булевий покажчик стану рахунку
         public bool isPayed = false;
@@ -77,11 +77,15 @@ namespace Invoice_for_payment
 
         ////Методи
         ///Метод друку рахунку
-        public void Print() 
+        public void Print()
         {
             string payedInfo = isPayed == true ? ("Оплачено") : ("Не оплачено");
-  
-            Console.ForegroundColor = ConsoleColor.Green;
+            
+            if (isPayed) 
+                Console.ForegroundColor = ConsoleColor.Green;
+            else 
+                Console.ForegroundColor = ConsoleColor.Red;
+
             Console.WriteLine(
                 $"■ Номер рахунку: {numInvoice};\n" +
                 $"■ Статус рахунку: {payedInfo};\n" +
@@ -89,13 +93,14 @@ namespace Invoice_for_payment
                 $"■ Кількість днів: {DayCount};\n" +
                 $"■ Штраф за один день затримки оплати: {PenaltyByDay};\n" +
                 $"■ Кількість днів затримки оплати: {DayPenaltyCount};");
-            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(
                 $"■ Сумма до сплати без врахування штрафу: {payWithoutPenalty};\n" +
                 $"■ Штраф: {penalty};\n" +
-                $"■ Загальна сумма до сплати: {ivoiceForPayment}.");
+                $"■ Загальна сумма до сплати: {ivoiceForPayment}.\n");
             Console.ResetColor();
         }
+
+
         ///Приватний метод встановлення номера рахунку
         static private string SetnumInvoice()
         {
@@ -239,5 +244,9 @@ namespace Invoice_for_payment
             isPayed = TakeBoolInput($"За рахунком №{numInvoice}\tШтраф сплачено?");
         }
 
+        public int CompareTo(Invoice obj)
+        {
+            return numInvoice.CompareTo(obj.numInvoice);
+        }
     }
 }
