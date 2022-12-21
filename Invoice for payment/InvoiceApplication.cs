@@ -222,7 +222,5 @@ namespace Invoice_for_payment
             Save();
         }
 
-        
-
     }
 }
