@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-
+using System.Runtime.InteropServices;
 
 namespace Invoice_for_payment
 {
@@ -99,7 +99,6 @@ namespace Invoice_for_payment
                 $"■ Загальна сумма до сплати: {ivoiceForPayment}.\n");
             Console.ResetColor();
         }
-
 
         ///Приватний метод встановлення номера рахунку
         static private string SetnumInvoice()
